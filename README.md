@@ -11,23 +11,25 @@ Your goal is to:
 - Evaluate what your system gets right and wrong
 - Reflect on how this mirrors real world AI recommenders
 
+This is a content-based music recommender that scores songs against a user's taste profile using three weighted features: genre, mood, and energy. Songs are ranked by total score, and the top results are returned as recommendations.
+
 Replace this paragraph with your own summary of what your version does.
 
 ---
 
 ## How The System Works
 
-Explain your design in plain language.
+Real-world platforms like Spotify and YouTube use two main approaches to recommend music. Collaborative filtering looks at behavior across many users — if people with similar listening habits to yours love a song, it gets surfaced to you. Content-based filtering instead looks at the attributes of songs you already enjoy and finds others with similar traits.
 
-Some prompts to answer:
+My recommender uses a content-based approach. Each Song has attributes including genre, mood, energy, tempo_bpm, valence, danceability, and acousticness. The UserProfile stores a user's preferred genre, preferred mood, and preferred energy level.
 
-- What features does each `Song` use in your system
-  - For example: genre, mood, energy, tempo
-- What information does your `UserProfile` store
-- How does your `Recommender` compute a score for each song
-- How do you choose which songs to recommend
+The Recommender scores each song out of 100 points:
 
-You can include a simple diagram or bullet list if helpful.
+Genre match: 40 points (exact match or 0)
+Mood match: 30 points (exact match or 0)
+Energy closeness: 30 × (1 - |user_energy - song_energy|)
+
+All songs are scored and sorted from highest to lowest. The top-ranked songs are returned as recommendations.
 
 ---
 
